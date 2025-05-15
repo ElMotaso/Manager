@@ -1,10 +1,16 @@
-﻿namespace DefaultNamespace;
+﻿using Godot;
 
-public class Main
+public class Main : Node2D
 {
     private Runner Leo = new Runner("Leo");
     private Runner Thomas = new Runner("Thomas");
     private Runner Marcel = new Runner("Marcel");
+    
+    public override void _Ready()
+    {
+        GD.Print("Main Script is Ready!");
+        PrintRaceResults();
+    }
     
     private string race(float entry_fee, float distance, float elevation, Runner[] runners)
     {

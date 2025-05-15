@@ -10,7 +10,7 @@ public class Runner
     private float injury_probability;
     private int money;
 
-    public Runner(sring name)
+    public Runner(string name)
     {
         this.name = name;
         Random random = new Random();
