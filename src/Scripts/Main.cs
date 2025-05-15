@@ -1,0 +1,33 @@
+﻿namespace DefaultNamespace;
+
+public class Main
+{
+    private Runner Leo = new Runner("Leo");
+    private Runner Thomas = new Runner("Thomas");
+    private Runner Marcel = new Runner("Marcel");
+    
+    private string race(float entry_fee, float distance, float elevation, Runner[] runners)
+    {
+        float bestTime = float.MaxValue;
+        string winner = "";
+        
+        foreach (Runner runner in runners)
+        {
+            runner.money -= entry_fee;
+            float finishTime = runner.run(distance, elevation);
+            if (finishTime < bestTime)
+            {
+                bestTime = finishTime;
+                winner = runner.name;
+            }
+        }
+        return winner;
+    }
+    
+    public void PrintRaceResults()
+    {
+        Runner[] runners = new Runner[] { Leo, Thomas, Marcel };
+        string winner = race(10.0f, 1000.0f, 100.0f, runners);
+        Console.WriteLine($"Race winner: {winner}");
+    }
+}
