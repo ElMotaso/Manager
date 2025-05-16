@@ -6,10 +6,10 @@ public class Runner
 {
     public string name;
     public double fitness;
-    public double fatigue;
-    public double fatigue_resistance;
-    public double hill_skill;
-    public double injury_probability;
+    public double trainingFatigue;
+    public double fatigueResistance;
+    public double hillSkill;
+    public double injuryProbability;
     public int money;
 
     public Runner(string name)
@@ -17,19 +17,19 @@ public class Runner
         this.name = name;
         Random random = new Random();
         fitness = random.NextDouble() * 50;
-        fatigue = 0;
-        fatigue_resistance = 0;
-        hill_skill = 0;
-        injury_probability = 0.5;
+        trainingFatigue = 0;
+        fatigueResistance = 0;
+        hillSkill = 0;
+        injuryProbability = 0.5;
         money = (int)(random.NextDouble() * 1000);
     }
 
-    public double run(double distance, double elevation)
+    public double Run(double distance, double elevation)
     {
         return distance *
                7 / fitness * // average pace
-               Math.Pow(1.1 - fatigue_resistance / 10, distance) * // distance penalty
-               Math.Pow(1.1 - hill_skill / 10, elevation / 100); // elevation penalty
+               Math.Pow(1.1 - fatigueResistance / 10, distance) * // distance penalty
+               Math.Pow(1.1 - hillSkill / 10, elevation / 100); // elevation penalty
     }
 
 }

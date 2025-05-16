@@ -1,27 +1,27 @@
-﻿using System;
-using DefaultNamespace;
 using Godot;
+using System;
+using DefaultNamespace;
 
-public partial class Main : Node2D
+public partial class Button : Godot.Button
 {
     private Runner Leo = new Runner("Leo");
     private Runner Thomas = new Runner("Thomas");
     private Runner Marcel = new Runner("Marcel");
     
-    public override void _Ready()
+    public void _on_button_down()
     {
         GD.Print("Main Script is Ready!");
         PrintRaceResults();
     }
     
-    private string Race(float entry_fee, float distance, float elevation, Runner[] runners)
+    private string Race(float entryFee, float distance, float elevation, Runner[] runners)
     {
         double bestTime = float.MaxValue;
         string winner = "";
         
         foreach (Runner runner in runners)
         {
-            runner.money -= (int)(entry_fee);
+            runner.money -= (int)(entryFee);
             double finishTime = runner.Run(distance, elevation);
             GD.Print($"{runner.name}: {finishTime}");
             if (finishTime < bestTime)

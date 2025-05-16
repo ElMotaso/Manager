@@ -1,6 +1,18 @@
 [gd_scene load_steps=2 format=3 uid="uid://dsiqck7hbclq3"]
 
-[ext_resource type="Script" uid="uid://5sle2jepojor" path="res://src/Scripts/Main.cs" id="1_ygj5l"]
+[ext_resource type="Script" path="res://src/Scenes/Button.cs" id="1_ygj5l"]
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="Node"]
+
+[node name="Button" type="Button" parent="."]
+anchors_preset = -1
+anchor_right = 0.297743
+anchor_bottom = 0.354938
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 18.0
+offset_bottom = 18.0
 script = ExtResource("1_ygj5l")
+metadata/_edit_use_anchors_ = true
+
+[connection signal="button_down" from="Button" to="Button" method="_on_button_down"]
