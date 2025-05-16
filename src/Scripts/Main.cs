@@ -1,6 +1,8 @@
-﻿using Godot;
+﻿using System;
+using DefaultNamespace;
+using Godot;
 
-public class Main : Node2D
+public partial class Main : Node2D
 {
     private Runner Leo = new Runner("Leo");
     private Runner Thomas = new Runner("Thomas");
@@ -14,13 +16,13 @@ public class Main : Node2D
     
     private string race(float entry_fee, float distance, float elevation, Runner[] runners)
     {
-        float bestTime = float.MaxValue;
+        double bestTime = float.MaxValue;
         string winner = "";
         
         foreach (Runner runner in runners)
         {
-            runner.money -= entry_fee;
-            float finishTime = runner.run(distance, elevation);
+            runner.money -= (int)(entry_fee);
+            double finishTime = runner.run(distance, elevation);
             if (finishTime < bestTime)
             {
                 bestTime = finishTime;

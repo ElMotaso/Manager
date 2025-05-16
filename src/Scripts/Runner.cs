@@ -1,14 +1,16 @@
-﻿namespace DefaultNamespace;
+﻿using System;
+
+namespace DefaultNamespace;
 
 public class Runner
 {
     public string name;
-    private float fitness;
-    private float fatigue;
-    public float fatigue_resistance;
-    public float hill_skill;
-    private float injury_probability;
-    private int money;
+    public double fitness;
+    public double fatigue;
+    public double fatigue_resistance;
+    public double hill_skill;
+    public double injury_probability;
+    public int money;
 
     public Runner(string name)
     {
@@ -19,10 +21,10 @@ public class Runner
         fatigue_resistance = 0;
         hill_skill = 0;
         injury_probability = 0.5;
-        money = random.NextDouble() * 1000;
+        money = (int)(random.NextDouble() * 1000);
     }
 
-    public float run(distance: float, elevation: float)
+    public double run(double distance, double elevation)
     {
         return distance *
                7 / fitness * // average pace
