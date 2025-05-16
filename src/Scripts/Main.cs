@@ -1,6 +1,7 @@
 ﻿using System;
 using DefaultNamespace;
 using Godot;
+using Manager.Scripts;
 
 public partial class Main : Node
 {

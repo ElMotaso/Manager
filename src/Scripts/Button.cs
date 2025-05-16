@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using DefaultNamespace;
+using Manager.Scripts;
 
 public partial class Button : Godot.Button
 {

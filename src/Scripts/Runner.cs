@@ -1,91 +1,95 @@
 ﻿using System;
 using DefaultNamespace.MathLib;
 
-namespace DefaultNamespace;
+namespace Manager.Scripts;
 
 public class Runner
 {
-    private string _name;
-
-    public string Name
-    {
-        get => _name;
-        set => _name = value;
-    }
+    public string Name { get; set; }
 
     private double _fitness;
-    private double _trainingFatigue;
+    private double _fatigue;
     private double _fatigueResistance;
     private double _hillSkill;
     private double _injuryProbability;
-    private int _money;
+    private double _fatigueInterest = 1.05;
 
-    public int Money
-    {
-        get => _money;
-        set => _money = value;
-    }
+    public int Money { get; set; }
 
     public Runner(string name)
     {
-        this._name = name;
+        this.Name = name;
         NormalDistribution normalDistribution = new NormalDistribution();
         _fitness = normalDistribution.GetNormal(100, 100);
-        _trainingFatigue = 0;
-        _fatigueResistance = 0;
+        _fatigue = 0;
+        _fatigueResistance = 1;
         _hillSkill = 0;
         _injuryProbability = 0.5;
-        _money = (int)normalDistribution.GetNormal(5000, 3000);
+        Money = (int)normalDistribution.GetNormal(5000, 3000);
     }
     
-    public Runner(string name, double fitness, double trainingFatigue, double fatigueResistance, double hillSkill,
+    public Runner(string name, double fitness, double fatigue, double fatigueResistance, double hillSkill,
         double injuryProbability, int money)
     {
-        this._name = name;
+        this.Name = name;
         this._fitness = fitness;
-        this._trainingFatigue = trainingFatigue;
+        this._fatigue = fatigue;
         this._fatigueResistance = fatigueResistance;
         this._hillSkill = hillSkill;
         this._injuryProbability = injuryProbability;
-        this._money = money;
+        this.Money = money;
     }
 
-    public double getAveragePace() // in minutes per km
+    private double GetAveragePace() // in minutes per km
     {
         return 7 / _fitness;
     }
 
-    public double getDistancePenaltyFactor(double distance)
+    private double GetDistancePenaltyFactor(double distance)
     {
         return Math.Pow(1.1 - _fatigueResistance / 10, distance);
     }
 
-    public double getElevationPenaltyFactor(double elevation)
+    private double GetElevationPenaltyFactor(double elevation)
     {
         return Math.Pow(1.1 - _hillSkill / 10, elevation / 100);
     }
 
-    public double getRoutePenaltyFactor(double distance, double elevation)
+    private double GetRoutePenaltyFactor(double distance, double elevation)
     {
-        return getDistancePenaltyFactor(distance) * getElevationPenaltyFactor(elevation);
+        return GetDistancePenaltyFactor(distance) * GetElevationPenaltyFactor(elevation);
     }
 
-    public double getRunnerReadienessFactor()
+    private double GetRunnerReadienessFactor()
     {
-        return 1;
+        return 1 / _fatigue;
     }
 
-    public double getFinishTime(double distance, double elevation)
+    private double GetFinishTime(double distance, double elevation)
     {
         return distance *
-               getAveragePace() *
-               getRoutePenaltyFactor(distance, elevation) *
-               getRunnerReadienessFactor();
+               GetAveragePace() *
+               GetRoutePenaltyFactor(distance, elevation) *
+               GetRunnerReadienessFactor();
+    }
+
+    private double CalculateFatigue(double distance, double elevation)
+    {
+        double addedFatigue = _fatigue * _fatigueInterest
+                              + distance 
+                              + elevation / 10 / _hillSkill;
+        return _fatigue + addedFatigue * _fatigueResistance;
+    }
+
+    private bool GetsInjured(double distance, double elevation)
+    {
+        return true;
     }
     
     public double Run(double distance, double elevation)
     {
-        return getFinishTime(distance, elevation);
+        _fatigue = CalculateFatigue(distance, elevation);
+        return GetFinishTime(distance, elevation);
     }
 
 }
