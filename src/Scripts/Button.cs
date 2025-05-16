@@ -8,35 +8,16 @@ public partial class Button : Godot.Button
     public void _on_button_down()
     {
         GD.Print("Main Script is Ready!");
-        PrintRaceResults();
+        Race race = new Race(50, 5, 30, getRunners());
+        race.PrintRaceResults();
     }
-    
-    private string Race(float entryFee, float distance, float elevation, Runner[] runners)
-    {
-        double bestTime = float.MaxValue;
-        string winner = "";
-        
-        foreach (Runner runner in runners)
-        {
-            runner.money -= (int)(entryFee);
-            double finishTime = runner.Run(distance, elevation);
-            GD.Print($"{runner.name}: {finishTime}");
-            if (finishTime < bestTime)
-            {
-                bestTime = finishTime;
-                winner = runner.name;
-            }
-        }
-        return winner;
-    }
-    
-    public void PrintRaceResults()
+
+    public Runner[] getRunners()
     {
         Runner Leo = new Runner("Leo");
         Runner Thomas = new Runner("Thomas");
         Runner Marcel = new Runner("Marcel");
         Runner[] runners = new Runner[] { Leo, Thomas, Marcel };
-        string winner = Race(10.0f, 1000.0f, 100.0f, runners);
-        GD.Print($"Race winner: {winner}");
+        return runners;
     }
 }
