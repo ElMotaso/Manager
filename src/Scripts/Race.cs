@@ -24,13 +24,13 @@ public class Race
         
         foreach (Runner runner in runners)
         {
-            runner.money -= (int)(entryFee);
+            runner.Money -= (int)(entryFee);
             double finishTime = runner.Run(distance, elevation);
-            GD.Print($"{runner.name}: {finishTime}");
+            GD.Print($"{runner.Name}: {finishTime}");
             if (finishTime < bestTime)
             {
                 bestTime = finishTime;
-                winner = runner.name;
+                winner = runner.Name;
             }
         }
         return winner;
