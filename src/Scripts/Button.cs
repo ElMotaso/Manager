@@ -4,9 +4,6 @@ using DefaultNamespace;
 
 public partial class Button : Godot.Button
 {
-    private Runner Leo = new Runner("Leo");
-    private Runner Thomas = new Runner("Thomas");
-    private Runner Marcel = new Runner("Marcel");
     
     public void _on_button_down()
     {
@@ -35,6 +32,9 @@ public partial class Button : Godot.Button
     
     public void PrintRaceResults()
     {
+        Runner Leo = new Runner("Leo");
+        Runner Thomas = new Runner("Thomas");
+        Runner Marcel = new Runner("Marcel");
         Runner[] runners = new Runner[] { Leo, Thomas, Marcel };
         string winner = Race(10.0f, 1000.0f, 100.0f, runners);
         GD.Print($"Race winner: {winner}");
