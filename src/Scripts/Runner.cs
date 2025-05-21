@@ -45,19 +45,19 @@ public class Runner
         return 7 / _fitness;
     }
 
-    private double GetDistancePenaltyFactor(double distance)
+    private double GetDistancePenaltyFactor(Run run)
     {
-        return Math.Pow(1.1 - _fatigueResistance / 10, distance);
+        return Math.Pow(1.1 - _fatigueResistance / 10, run.DistanceDifficultyScore);
     }
 
-    private double GetElevationPenaltyFactor(double elevation)
+    private double GetElevationPenaltyFactor(Run run)
     {
-        return Math.Pow(1.1 - _hillSkill / 10, elevation / 100);
+        return Math.Pow(1.1 - _hillSkill / 10, run.HillDifficultyScore / 100);
     }
 
-    private double GetRoutePenaltyFactor(double distance, double elevation)
+    private double GetRoutePenaltyFactor(Run run)
     {
-        return GetDistancePenaltyFactor(distance) * GetElevationPenaltyFactor(elevation);
+        return GetDistancePenaltyFactor(run) * GetElevationPenaltyFactor(run);
     }
 
     private double GetRunnerReadienessFactor()
@@ -65,31 +65,31 @@ public class Runner
         return 1 / _fatigue;
     }
 
-    private double GetFinishTime(double distance, double elevation)
+    private double GetFinishTime(Run run)
     {
-        return distance *
+        return run.Distance *
                GetAveragePace() *
-               GetRoutePenaltyFactor(distance, elevation) *
+               GetRoutePenaltyFactor(run) *
                GetRunnerReadienessFactor();
     }
 
-    private double CalculateFatigue(double distance, double elevation)
+    private double CalculateFatigue(Run run)
     {
         double addedFatigue = _fatigue * _fatigueInterest
-                              + distance 
-                              + elevation / 10 / _hillSkill;
+                              + run.DistanceDifficultyScore 
+                              + run.HillDifficultyScore / 10 / _hillSkill;
         return _fatigue + addedFatigue * _fatigueResistance;
     }
 
-    private bool GetsInjured(double distance, double elevation)
+    private bool GetsInjured(Run run)
     {
-        return true;
+        return false;
     }
     
-    public double Run(double distance, double elevation)
+    public double Run(Run run)
     {
-        _fatigue = CalculateFatigue(distance, elevation);
-        return GetFinishTime(distance, elevation);
+        _fatigue = CalculateFatigue(run);
+        return GetFinishTime(run);
     }
 
 }

@@ -1,32 +1,29 @@
 ﻿using Godot;
-using Manager.Scripts;
 
-namespace DefaultNamespace;
+namespace Manager.Scripts;
 
-public class Race
+public class Race : Run
 {
-    private double entryFee;
-    private double distance;
-    private double elevation;
-    private Runner[] runners;
+    private double _entryFee;
+    private Runner[] _runners;
 
-    public Race(double entryFee, double distance, double elevation, Runner[] runners)
+    public Race(double distance, double elevation, double entryFee, Runner[] runners, double groundDifficulty = 1) : base(distance, elevation, groundDifficulty)
     {
-        this.entryFee = entryFee;
-        this.distance = distance;
-        this.elevation = elevation;
-        this.runners = runners;
+        this._entryFee = entryFee;
+        this.Distance = distance;
+        this.Elevation = elevation;
+        this._runners = runners;
     }
     
-    private string startRace()
+    private string Start()
     {
         double bestTime = float.MaxValue;
         string winner = "";
         
-        foreach (Runner runner in runners)
+        foreach (Runner runner in _runners)
         {
-            runner.Money -= (int)(entryFee);
-            double finishTime = runner.Run(distance, elevation);
+            runner.Money -= (int)(_entryFee);
+            double finishTime = runner.Run(this);
             GD.Print($"{runner.Name}: {finishTime}");
             if (finishTime < bestTime)
             {
@@ -39,7 +36,7 @@ public class Race
     
     public void PrintRaceResults()
     {
-        string winner = startRace();
+        string winner = Start();
         GD.Print($"Race winner: {winner}");
     }
 }
