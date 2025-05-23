@@ -1,6 +1,6 @@
-﻿namespace Manager.Scripts;
+﻿namespace Manager.Scripts.Runs;
 
-public class Segment
+public class Segment : IRun
 {
     public double Distance { get; set; }
     public double Elevation { get; set; }
@@ -26,5 +26,10 @@ public class Segment
             factor = -4;
         }
         return Distance * (1 + double.Max(G * factor, -0.3)) * GroundDifficulty;
+    }
+    
+    public double getDistance()
+    {
+        return Distance;
     }
 }

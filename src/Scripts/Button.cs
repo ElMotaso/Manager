@@ -2,6 +2,7 @@ using Godot;
 using System;
 using DefaultNamespace;
 using Manager.Scripts;
+using Manager.Scripts.Runs;
 
 public partial class Button : Godot.Button
 {
@@ -9,7 +10,9 @@ public partial class Button : Godot.Button
     public void _on_button_down()
     {
         GD.Print("Main Script is Ready!");
-        Race race = new Race(50, 5, 30, getRunners());
+        Race race = new Race(10, 
+            getRunners(), 
+            new Segment(10, 100, 1));
         race.PrintRaceResults();
     }
 

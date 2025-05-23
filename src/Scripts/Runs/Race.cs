@@ -1,18 +1,18 @@
 ﻿using Godot;
 
-namespace Manager.Scripts;
+namespace Manager.Scripts.Runs;
 
-public class Race : Segment
+public class Race : IRun
 {
     private double _entryFee;
     private Runner[] _runners;
+    private IRun run;
 
-    public Race(double distance, double elevation, double entryFee, Runner[] runners, double groundDifficulty = 1) : base(distance, elevation, groundDifficulty)
+    public Race(double entryFee, Runner[] runners, IRun run)
     {
         this._entryFee = entryFee;
-        this.Distance = distance;
-        this.Elevation = elevation;
         this._runners = runners;
+        this.run = run;
     }
     
     private string Start()
@@ -23,7 +23,7 @@ public class Race : Segment
         foreach (Runner runner in _runners)
         {
             runner.Money -= (int)(_entryFee);
-            double finishTime = runner.Run(this);
+            double finishTime = runner.Run(run);
             GD.Print($"{runner.Name}: {finishTime}");
             if (finishTime < bestTime)
             {
@@ -38,5 +38,15 @@ public class Race : Segment
     {
         string winner = Start();
         GD.Print($"Race winner: {winner}");
+    }
+    
+    public double CalculateDifficultyScore()
+    {
+        return run.CalculateDifficultyScore();
+    }
+
+    public double getDistance()
+    {
+        return run.getDistance();
     }
 }

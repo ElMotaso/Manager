@@ -1,5 +1,6 @@
 ﻿using System;
 using DefaultNamespace.MathLib;
+using Manager.Scripts.Runs;
 
 namespace Manager.Scripts;
 
@@ -35,27 +36,27 @@ public partial class Runner // Ideen und bisschen ausgebaute Teile der Klasse in
     }
     
     
-    private double GetFinishTime(Segment segment)
+    private double GetFinishTime(IRun run)
     {
-        return segment.Distance *
+        return run.getDistance() *
                GetAveragePace();
     }
 
-    private double CalculateFatigue(Segment segment)
+    private double CalculateFatigue(IRun run)
     {
-        double addedFatigue = segment.CalculateDifficultyScore();
+        double addedFatigue = run.CalculateDifficultyScore();
         return _fatigue + addedFatigue;
     }
 
-    public void UpdateRunnerStats(Segment segment)
+    public void UpdateRunnerStats(IRun run)
     {
-        _fatigue = CalculateFatigue(segment);
+        _fatigue = CalculateFatigue(run);
     }
     
-    public double Run(Segment segment)
+    public double Run(IRun run)
     {
-        UpdateRunnerStats(segment);
-        return GetFinishTime(segment);
+        UpdateRunnerStats(run);
+        return GetFinishTime(run);
     }
 
 }
