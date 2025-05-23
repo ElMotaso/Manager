@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://dsiqck7hbclq3"]
+[gd_scene load_steps=5 format=3 uid="uid://dsiqck7hbclq3"]
 
 [ext_resource type="Script" uid="uid://fv3abgkoclw1" path="res://src/Scripts/Button.cs" id="1_ygj5l"]
+[ext_resource type="Script" uid="uid://diajhbwqmg0rw" path="res://src/Scripts/Slider/Distance.cs" id="2_7j17x"]
+[ext_resource type="Script" uid="uid://6lmpg5kpd3cn" path="res://src/Scripts/Slider/Elevation.cs" id="3_h6v6y"]
+[ext_resource type="Script" uid="uid://cwauc8l1glp5g" path="res://src/Scripts/Slider/GroundDifficulty.cs" id="4_0dd57"]
 
 [node name="Main" type="Node"]
 
@@ -12,7 +15,77 @@ offset_left = 10.0
 offset_top = 10.0
 offset_right = 18.0
 offset_bottom = 18.0
+text = "Race"
 script = ExtResource("1_ygj5l")
 metadata/_edit_use_anchors_ = true
 
+[node name="Button2" type="Button" parent="."]
+anchors_preset = -1
+anchor_left = 0.342
+anchor_right = 0.635
+anchor_bottom = 0.378
+offset_left = -12.984
+offset_top = 37.0
+offset_right = 141.48
+offset_bottom = 6.05598
+text = "Run"
+script = ExtResource("1_ygj5l")
+metadata/_edit_use_anchors_ = true
+
+[node name="Distance" type="Node" parent="."]
+script = ExtResource("2_7j17x")
+
+[node name="TextEdit" type="TextEdit" parent="Distance"]
+offset_left = 386.0
+offset_top = 263.0
+offset_right = 591.0
+offset_bottom = 309.0
+text = "Distance"
+
+[node name="HSlider" type="HSlider" parent="Distance"]
+offset_left = 621.0
+offset_top = 274.0
+offset_right = 809.0
+offset_bottom = 290.0
+
+[node name="Elevation" type="Node" parent="."]
+script = ExtResource("3_h6v6y")
+
+[node name="TextEdit" type="TextEdit" parent="Elevation"]
+offset_left = 390.0
+offset_top = 319.0
+offset_right = 595.0
+offset_bottom = 365.0
+text = "Elevation"
+
+[node name="HSlider" type="HSlider" parent="Elevation"]
+offset_left = 616.0
+offset_top = 330.0
+offset_right = 804.0
+offset_bottom = 346.0
+max_value = 1000.0
+
+[node name="GroundDifficulty" type="Node" parent="."]
+script = ExtResource("4_0dd57")
+
+[node name="TextEdit" type="TextEdit" parent="GroundDifficulty"]
+offset_left = 382.0
+offset_top = 377.0
+offset_right = 587.0
+offset_bottom = 423.0
+text = "Ground Difficulty"
+
+[node name="HSlider" type="HSlider" parent="GroundDifficulty"]
+offset_left = 618.0
+offset_top = 391.0
+offset_right = 806.0
+offset_bottom = 407.0
+min_value = 0.8
+max_value = 3.0
+value = 0.8
+
 [connection signal="button_down" from="Button" to="Button" method="_on_button_down"]
+[connection signal="button_down" from="Button2" to="Button2" method="_on_button_down"]
+[connection signal="drag_ended" from="Distance/HSlider" to="Distance" method="_on_h_slider_drag_ended"]
+[connection signal="drag_ended" from="Elevation/HSlider" to="Elevation" method="_on_h_slider_drag_ended"]
+[connection signal="drag_ended" from="GroundDifficulty/HSlider" to="GroundDifficulty" method="_on_h_slider_drag_ended"]
