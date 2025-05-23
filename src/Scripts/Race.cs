@@ -2,7 +2,7 @@
 
 namespace Manager.Scripts;
 
-public class Race : Run
+public class Race : Segment
 {
     private double _entryFee;
     private Runner[] _runners;

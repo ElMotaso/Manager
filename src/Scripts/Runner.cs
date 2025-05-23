@@ -39,30 +39,30 @@ public class Runner
     }
     
     
-    private double GetFinishTime(Run run)
+    private double GetFinishTime(Segment segment)
     {
-        return run.Distance *
+        return segment.Distance *
                GetAveragePace(); // * GetRoutePenaltyFactor(run) * GetRunnerReadienessFactor();
     }
 
-    private double CalculateFatigue(Run run)
+    private double CalculateFatigue(Segment segment)
     {
-        double addedFatigue = run.DistanceDifficultyScore;
+        double addedFatigue = segment.CalculateDifficultyScore();
                               /* + _fatigue * _fatigueInterest
                                 + run.DistanceDifficultyScore
                                 + run.HillDifficultyScore / 10 / _hillSkill; */
         return _fatigue + addedFatigue; // * _fatigueResistance;
     }
 
-    public void UpdateRunnerStats(Run run)
+    public void UpdateRunnerStats(Segment segment)
     {
-        _fatigue = CalculateFatigue(run);
+        _fatigue = CalculateFatigue(segment);
     }
     
-    public double Run(Run run)
+    public double Run(Segment segment)
     {
-        UpdateRunnerStats(run);
-        return GetFinishTime(run);
+        UpdateRunnerStats(segment);
+        return GetFinishTime(segment);
     }
 
     /*
