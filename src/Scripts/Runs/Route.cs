@@ -2,15 +2,10 @@
 
 namespace Manager.Scripts.Runs;
 
-public class Route : IRun
+public class Route(List<Segment> segments) : IRun
 {
-    public List<Segment> Segments { get; set; } = new List<Segment>();
+    private List<Segment> Segments { get; set; } = segments;
 
-    public Route(List<Segment> segments)
-    {
-        this.Segments = segments;
-    }
-    
     public double CalculateDifficultyScore()
     {
         double difficultyScore = 0;
@@ -21,12 +16,12 @@ public class Route : IRun
         return difficultyScore;
     }
     
-    public double getDistance()
+    public double GetDistance()
     {
         double distance = 0;
         foreach (Segment segment in Segments)
         {
-            distance += segment.getDistance();
+            distance += segment.GetDistance();
         }
         return distance;
     }

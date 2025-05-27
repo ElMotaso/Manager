@@ -28,7 +28,7 @@ public class Segment : IRun
         return Distance * (1 + double.Max(G * factor, -0.3)) * GroundDifficulty;
     }
     
-    public double getDistance()
+    public double GetDistance()
     {
         return Distance;
     }

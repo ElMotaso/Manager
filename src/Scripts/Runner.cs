@@ -1,33 +1,55 @@
-﻿using System;
-using DefaultNamespace.MathLib;
+﻿using Manager.Scripts.Math;
 using Manager.Scripts.Runs;
 
 namespace Manager.Scripts;
 
 public partial class Runner // Ideen und bisschen ausgebaute Teile der Klasse in RunnerDeprecated
 {
-    public string Name { get; set; }
-    public int Money { get; set; }
 
-    private double _fitness;
+    private string _name;
     private double _fatigue;
+    private int _money;
+    private double _fitness;
+
+    public string Name
+    {
+        get => _name;
+        set => _name = value;
+    }
+    public double Fitness
+    {
+        get => _fitness;
+        set => _fitness = value;
+    }
+    public int Money
+    {
+        get => _money;
+        set => _money = value;
+    }
+    public double Fatigue
+    {
+        get => _fatigue;
+        set => _fatigue = value;
+    }
+
+    
 
 
     public Runner(string name)
     {
-        this.Name = name;
+        _name = name;
         NormalDistribution normalDistribution = new NormalDistribution();
         _fitness = normalDistribution.GetNormal(100, 100);
         _fatigue = 0;
-        Money = (int)normalDistribution.GetNormal(5000, 3000);
+        _money = (int)normalDistribution.GetNormal(5000, 3000);
     }
     
     public Runner(string name, double fitness, double fatigue, int money)
     {
-        this.Name = name;
-        this._fitness = fitness;
-        this._fatigue = fatigue;
-        this.Money = money;
+        _name = name;
+        _fitness = fitness;
+        _fatigue = fatigue;
+        _money = money;
     }
 
     private double GetAveragePace() // in minutes per km
@@ -38,7 +60,7 @@ public partial class Runner // Ideen und bisschen ausgebaute Teile der Klasse in
     
     private double GetFinishTime(IRun run)
     {
-        return run.getDistance() *
+        return run.GetDistance() *
                GetAveragePace();
     }
 
@@ -48,7 +70,7 @@ public partial class Runner // Ideen und bisschen ausgebaute Teile der Klasse in
         return _fatigue + addedFatigue;
     }
 
-    public void UpdateRunnerStats(IRun run)
+    private void UpdateRunnerStats(IRun run)
     {
         _fatigue = CalculateFatigue(run);
     }

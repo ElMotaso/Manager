@@ -1,11 +1,10 @@
 ﻿using System;
-using DefaultNamespace;
 using Godot;
 using Manager.Scripts;
 
 public partial class Main : Node
 {
-    private Runner Player;
+    private Runner _player;
     
     public override void _Ready()
     {

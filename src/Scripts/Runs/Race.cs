@@ -4,15 +4,15 @@ namespace Manager.Scripts.Runs;
 
 public class Race : IRun
 {
-    private double _entryFee;
-    private Runner[] _runners;
-    private IRun run;
+    private readonly double _entryFee;
+    private readonly Runner[] _runners;
+    private readonly IRun _run;
 
     public Race(double entryFee, Runner[] runners, IRun run)
     {
-        this._entryFee = entryFee;
-        this._runners = runners;
-        this.run = run;
+        _entryFee = entryFee;
+        _runners = runners;
+        _run = run;
     }
     
     private string Start()
@@ -23,7 +23,7 @@ public class Race : IRun
         foreach (Runner runner in _runners)
         {
             runner.Money -= (int)(_entryFee);
-            double finishTime = runner.Run(run);
+            double finishTime = runner.Run(_run);
             GD.Print($"{runner.Name}: {finishTime}");
             if (finishTime < bestTime)
             {
@@ -42,11 +42,11 @@ public class Race : IRun
     
     public double CalculateDifficultyScore()
     {
-        return run.CalculateDifficultyScore();
+        return _run.CalculateDifficultyScore();
     }
 
-    public double getDistance()
+    public double GetDistance()
     {
-        return run.getDistance();
+        return _run.GetDistance();
     }
 }
