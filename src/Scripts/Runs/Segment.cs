@@ -2,20 +2,25 @@
 
 public class Segment : IRun
 {
-    public double Distance { get; set; }
-    public double Elevation { get; set; }
-    private double GroundDifficulty { get; set; }
+    private readonly double _distance;
+    private readonly double _elevation;
+    private readonly double _groundDifficulty;
+    public double Distance => _distance;
+
+    public double Elevation => _elevation;
+
+    public double GroundDifficulty => _groundDifficulty;
     
     public Segment(double distance, double elevation, double groundDifficulty = 1)
     {
-        this.Distance = distance;
-        this.Elevation = elevation;
-        this.GroundDifficulty = groundDifficulty;
+        _distance = distance;
+        _elevation = elevation;
+        _groundDifficulty = groundDifficulty;
     }
 
     public double CalculateDifficultyScore()
     {
-        double G = Elevation / Distance;
+        double G = _elevation / _distance;
         double factor = 0;
         if (G > 0)
         {
@@ -25,11 +30,6 @@ public class Segment : IRun
         {
             factor = -4;
         }
-        return Distance * (1 + double.Max(G * factor, -0.3)) * GroundDifficulty;
-    }
-    
-    public double GetDistance()
-    {
-        return Distance;
+        return _distance * (1 + double.Max(G * factor, -0.3)) * _groundDifficulty;
     }
 }

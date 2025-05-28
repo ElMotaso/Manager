@@ -7,7 +7,7 @@ public interface IRun
         return 0;
     }
 
-    public double GetDistance()
+    public double Distance()
     {
         return 0;
     }

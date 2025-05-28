@@ -60,7 +60,7 @@ public partial class Runner // Ideen und bisschen ausgebaute Teile der Klasse in
     
     private double GetFinishTime(IRun run)
     {
-        return run.GetDistance() *
+        return run.Distance() *
                GetAveragePace();
     }
 

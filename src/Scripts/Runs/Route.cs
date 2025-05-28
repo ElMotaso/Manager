@@ -16,12 +16,12 @@ public class Route(List<Segment> segments) : IRun
         return difficultyScore;
     }
     
-    public double GetDistance()
+    public double Distance()
     {
         double distance = 0;
         foreach (Segment segment in Segments)
         {
-            distance += segment.GetDistance();
+            distance += segment.Distance;
         }
         return distance;
     }

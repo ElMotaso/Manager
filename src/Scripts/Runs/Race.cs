@@ -45,8 +45,8 @@ public class Race : IRun
         return _run.CalculateDifficultyScore();
     }
 
-    public double GetDistance()
+    public double Distance()
     {
-        return _run.GetDistance();
+        return _run.Distance();
     }
 }
