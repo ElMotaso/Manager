@@ -1,9 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://dsiqck7hbclq3"]
+[gd_scene load_steps=3 format=3 uid="uid://dsiqck7hbclq3"]
 
 [ext_resource type="Script" uid="uid://fv3abgkoclw1" path="res://src/Scripts/Button.cs" id="1_ygj5l"]
-[ext_resource type="Script" uid="uid://diajhbwqmg0rw" path="res://src/Scripts/Slider/Distance.cs" id="2_7j17x"]
-[ext_resource type="Script" uid="uid://6lmpg5kpd3cn" path="res://src/Scripts/Slider/Elevation.cs" id="3_h6v6y"]
-[ext_resource type="Script" uid="uid://cwauc8l1glp5g" path="res://src/Scripts/Slider/GroundDifficulty.cs" id="4_0dd57"]
+[ext_resource type="Script" uid="uid://dr6w61cusxrea" path="res://src/Scripts/Slider/Distance.cs" id="2_2u7ne"]
 
 [node name="Main" type="Node"]
 
@@ -33,7 +31,7 @@ script = ExtResource("1_ygj5l")
 metadata/_edit_use_anchors_ = true
 
 [node name="Distance" type="Node" parent="."]
-script = ExtResource("2_7j17x")
+script = ExtResource("2_2u7ne")
 
 [node name="TextEdit" type="TextEdit" parent="Distance"]
 offset_left = 386.0
@@ -49,7 +47,6 @@ offset_right = 809.0
 offset_bottom = 290.0
 
 [node name="Elevation" type="Node" parent="."]
-script = ExtResource("3_h6v6y")
 
 [node name="TextEdit" type="TextEdit" parent="Elevation"]
 offset_left = 390.0
@@ -66,7 +63,6 @@ offset_bottom = 346.0
 max_value = 1000.0
 
 [node name="GroundDifficulty" type="Node" parent="."]
-script = ExtResource("4_0dd57")
 
 [node name="TextEdit" type="TextEdit" parent="GroundDifficulty"]
 offset_left = 382.0
@@ -87,5 +83,3 @@ value = 0.8
 [connection signal="button_down" from="Button" to="Button" method="_on_button_down"]
 [connection signal="button_down" from="Button2" to="Button2" method="_on_button_down"]
 [connection signal="drag_ended" from="Distance/HSlider" to="Distance" method="_on_h_slider_drag_ended"]
-[connection signal="drag_ended" from="Elevation/HSlider" to="Elevation" method="_on_h_slider_drag_ended"]
-[connection signal="drag_ended" from="GroundDifficulty/HSlider" to="GroundDifficulty" method="_on_h_slider_drag_ended"]
