@@ -1,10 +1,25 @@
-[gd_scene load_steps=4 format=3 uid="uid://dsiqck7hbclq3"]
+[gd_scene load_steps=6 format=3 uid="uid://dsiqck7hbclq3"]
 
+[ext_resource type="PackedScene" uid="uid://dayq2fveermu2" path="res://src/Scenes/player.tscn" id="1_7j17x"]
+[ext_resource type="Script" uid="uid://5sle2jepojor" path="res://src/Scripts/Main.cs" id="1_h6v6y"]
 [ext_resource type="Script" uid="uid://fv3abgkoclw1" path="res://src/Scripts/RaceButton.cs" id="1_ygj5l"]
 [ext_resource type="PackedScene" uid="uid://dcvx0hvifvc31" path="res://src/Scenes/run.tscn" id="2_2u7ne"]
 [ext_resource type="Script" uid="uid://djsb2te06ga33" path="res://src/Scripts/Runner.cs" id="3_2av6j"]
 
 [node name="Main" type="Node"]
+script = ExtResource("1_h6v6y")
+_racePath = NodePath("RaceButton")
+_daysTillRace = 13
+_raceDistance = 10
+_raceElevation = 170
+_raceGroundDifficulty = 2
+
+[node name="Player" parent="." instance=ExtResource("1_7j17x")]
+offset_left = 11.0
+offset_top = 269.0
+offset_right = 11.0
+offset_bottom = 269.0
+script = ExtResource("3_2av6j")
 
 [node name="RaceButton" type="Button" parent="."]
 anchors_preset = -1
@@ -14,14 +29,15 @@ offset_left = 10.0
 offset_top = 10.0
 offset_right = 18.0
 offset_bottom = 18.0
-text = "Race"
+text = "Race
+Distance: 10km
+Elevation: 180m
+Ground Difficulty: 1.7
+Days till race: 14"
 script = ExtResource("1_ygj5l")
 metadata/_edit_use_anchors_ = true
 
 [node name="Run" parent="." instance=ExtResource("2_2u7ne")]
 _playerPath = NodePath("../Player")
-
-[node name="Player" type="Node" parent="."]
-script = ExtResource("3_2av6j")
 
 [connection signal="button_down" from="RaceButton" to="RaceButton" method="_on_button_down"]

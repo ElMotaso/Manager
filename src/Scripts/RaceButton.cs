@@ -11,7 +11,7 @@ public partial class RaceButton : Button
         GD.Print("Main Script is Ready!");
         Runs.Race race = new Runs.Race(10, 
             GetRunners(), 
-            new Segment(10, 100, 1));
+            new Segment(10, 180, 1.7));
         race.PrintRaceResults();
     }
 
