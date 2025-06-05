@@ -39,9 +39,9 @@ public partial class Runner : Node // Ideen und bisschen ausgebaute Teile der Kl
 
     public Runner()
     {
-        _name = "Thomas";
+        _name = "Player";
         NormalDistribution normalDistribution = new NormalDistribution();
-        _fitness = normalDistribution.GetNormal(100, 100);
+        _fitness = normalDistribution.GetNormal(100, 5);
         _fatigue = 0;
         _money = (int)normalDistribution.GetNormal(5000, 3000);
     }
@@ -73,18 +73,30 @@ public partial class Runner : Node // Ideen und bisschen ausgebaute Teile der Kl
 
     private double CalculateFatigue(IRun run)
     {
-        double addedFatigue = run.CalculateDifficultyScore();
+        double addedFatigue = run.CalculateDifficultyScore() / _fitness;
         return _fatigue + addedFatigue;
+    }
+
+    private double CalculateNewFitness(IRun run)
+    {
+        return _fitness + run.CalculateDifficultyScore() / _fitness;
+    }
+
+    protected virtual void UpdateUi()
+    {
+        
     }
 
     private void UpdateRunnerStats(IRun run)
     {
         _fatigue = CalculateFatigue(run);
+        _fitness = CalculateNewFitness(run);
+        UpdateUi();
     }
     
     public double Run(IRun run, bool isSprint = false)
     {
-        Console.WriteLine("yup i " + (isSprint ? "sprinted" : "jogged") + " " + run.Distance() + " km and " + run.Elevation() + " m with a difficulty of " + run.GroundDifficulty() + "!");
+        Console.WriteLine(_name + " " + (isSprint ? "sprinted" : "jogged") + " " + run.Distance() + " km and " + run.Elevation() + " m with a difficulty of " + run.GroundDifficulty() + "!");
         UpdateRunnerStats(run);
         return GetFinishTime(run);
     }

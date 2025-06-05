@@ -5,16 +5,15 @@ namespace Manager.Scripts;
 
 public partial class Run : Control
 {
-    [Export] private NodePath _playerPath;
-    private Runner _player;
+    private Main _main;
     
     public override void _Ready()
     {
-        _player = GetNode<Runner>(_playerPath);
+        _main = GetParent<Main>();
     }
 
     private void _on_run_button_start_run(Route route, bool isSprint)
     {
-        _player.Run(route, isSprint);
+        _main.GetPlayerToRun(route, isSprint);
     }
 }
