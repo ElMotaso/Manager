@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dsiqck7hbclq3"]
 
 [ext_resource type="Script" uid="uid://fv3abgkoclw1" path="res://src/Scripts/Button.cs" id="1_ygj5l"]
-[ext_resource type="Script" uid="uid://dr6w61cusxrea" path="res://src/Scripts/Slider/Distance.cs" id="2_2u7ne"]
+[ext_resource type="Script" uid="uid://dr6w61cusxrea" path="res://src/Scripts/Slider/SliderBox.cs" id="2_2u7ne"]
 
 [node name="Main" type="Node"]
 
@@ -32,6 +32,9 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Distance" type="Node" parent="."]
 script = ExtResource("2_2u7ne")
+_hSliderPath = NodePath("HSlider")
+_textEditPath = NodePath("TextEdit")
+_baseText = "Distance"
 
 [node name="TextEdit" type="TextEdit" parent="Distance"]
 offset_left = 386.0
@@ -47,6 +50,10 @@ offset_right = 809.0
 offset_bottom = 290.0
 
 [node name="Elevation" type="Node" parent="."]
+script = ExtResource("2_2u7ne")
+_hSliderPath = NodePath("HSlider")
+_textEditPath = NodePath("TextEdit")
+_baseText = "Elevation"
 
 [node name="TextEdit" type="TextEdit" parent="Elevation"]
 offset_left = 390.0
@@ -60,9 +67,13 @@ offset_left = 616.0
 offset_top = 330.0
 offset_right = 804.0
 offset_bottom = 346.0
-max_value = 1000.0
+max_value = 5000.0
 
 [node name="GroundDifficulty" type="Node" parent="."]
+script = ExtResource("2_2u7ne")
+_hSliderPath = NodePath("HSlider")
+_textEditPath = NodePath("TextEdit")
+_baseText = "Ground Difficulty"
 
 [node name="TextEdit" type="TextEdit" parent="GroundDifficulty"]
 offset_left = 382.0
@@ -78,8 +89,11 @@ offset_right = 806.0
 offset_bottom = 407.0
 min_value = 0.8
 max_value = 3.0
-value = 0.8
+step = 0.1
+value = 1.0
 
 [connection signal="button_down" from="Button" to="Button" method="_on_button_down"]
 [connection signal="button_down" from="Button2" to="Button2" method="_on_button_down"]
-[connection signal="drag_ended" from="Distance/HSlider" to="Distance" method="_on_h_slider_drag_ended"]
+[connection signal="value_changed" from="Distance/HSlider" to="Distance" method="_on_h_slider_value_changed"]
+[connection signal="value_changed" from="Elevation/HSlider" to="Elevation" method="_on_h_slider_value_changed"]
+[connection signal="value_changed" from="GroundDifficulty/HSlider" to="GroundDifficulty" method="_on_h_slider_value_changed"]
