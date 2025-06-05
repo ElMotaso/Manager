@@ -3,13 +3,13 @@ using Manager.Scripts.Runs;
 
 namespace Manager.Scripts;
 
-public partial class Button : Godot.Button
+public partial class RaceButton : Button
 {
     
     private void _on_button_down()
     {
         GD.Print("Main Script is Ready!");
-        Race race = new Race(10, 
+        Runs.Race race = new Runs.Race(10, 
             GetRunners(), 
             new Segment(10, 100, 1));
         race.PrintRaceResults();

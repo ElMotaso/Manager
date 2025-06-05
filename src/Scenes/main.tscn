@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dsiqck7hbclq3"]
 
-[ext_resource type="Script" uid="uid://fv3abgkoclw1" path="res://src/Scripts/Button.cs" id="1_ygj5l"]
+[ext_resource type="Script" path="res://src/Scripts/Button.cs" id="1_ygj5l"]
 [ext_resource type="Script" uid="uid://dr6w61cusxrea" path="res://src/Scripts/Slider/SliderBox.cs" id="2_2u7ne"]
 
 [node name="Main" type="Node"]

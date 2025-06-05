@@ -1,0 +1,132 @@
+[gd_scene load_steps=4 format=3 uid="uid://dcvx0hvifvc31"]
+
+[ext_resource type="Script" path="res://src/Scripts/Button.cs" id="1_nfeko"]
+[ext_resource type="Script" uid="uid://cv83hp4drhet2" path="res://src/Scripts/Slider/SliderOrganizer.cs" id="2_rjqyt"]
+[ext_resource type="Script" uid="uid://dr6w61cusxrea" path="res://src/Scripts/Slider/SliderBox.cs" id="3_xhf31"]
+
+[node name="Run" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RunButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.342
+anchor_right = 0.635
+anchor_bottom = 0.378
+offset_left = -12.984
+offset_top = 37.0
+offset_right = 141.48
+offset_bottom = 6.05598
+text = "Run"
+script = ExtResource("1_nfeko")
+metadata/_edit_use_anchors_ = true
+
+[node name="Sliders" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_rjqyt")
+_distanceSliderPath = NodePath("Distance/HSlider")
+_elevationSliderPath = NodePath("Elevation/HSlider")
+_groundDifficultySliderPath = NodePath("GroundDifficulty/HSlider")
+_isSprintCheckBoxPath = NodePath("Sprints/CheckBox")
+
+[node name="Distance" type="Control" parent="Sliders"]
+anchors_preset = 0
+script = ExtResource("3_xhf31")
+_hSliderPath = NodePath("HSlider")
+_textEditPath = NodePath("TextEdit")
+_baseText = "Distance"
+
+[node name="TextEdit" type="TextEdit" parent="Sliders/Distance"]
+offset_left = 386.0
+offset_top = 263.0
+offset_right = 591.0
+offset_bottom = 309.0
+text = "Distance"
+
+[node name="HSlider" type="HSlider" parent="Sliders/Distance"]
+offset_left = 621.0
+offset_top = 274.0
+offset_right = 809.0
+offset_bottom = 290.0
+
+[node name="Elevation" type="Control" parent="Sliders"]
+anchors_preset = 0
+script = ExtResource("3_xhf31")
+_hSliderPath = NodePath("HSlider")
+_textEditPath = NodePath("TextEdit")
+_baseText = "Elevation"
+
+[node name="TextEdit" type="TextEdit" parent="Sliders/Elevation"]
+offset_left = 390.0
+offset_top = 319.0
+offset_right = 595.0
+offset_bottom = 365.0
+text = "Elevation"
+
+[node name="HSlider" type="HSlider" parent="Sliders/Elevation"]
+offset_left = 616.0
+offset_top = 330.0
+offset_right = 804.0
+offset_bottom = 346.0
+max_value = 5000.0
+
+[node name="GroundDifficulty" type="Control" parent="Sliders"]
+anchors_preset = 0
+script = ExtResource("3_xhf31")
+_hSliderPath = NodePath("HSlider")
+_textEditPath = NodePath("TextEdit")
+_baseText = "Ground Difficulty"
+
+[node name="TextEdit" type="TextEdit" parent="Sliders/GroundDifficulty"]
+offset_left = 390.0
+offset_top = 378.0
+offset_right = 595.0
+offset_bottom = 424.0
+text = "Ground Difficulty"
+
+[node name="HSlider" type="HSlider" parent="Sliders/GroundDifficulty"]
+offset_left = 618.0
+offset_top = 391.0
+offset_right = 806.0
+offset_bottom = 407.0
+min_value = 0.8
+max_value = 3.0
+step = 0.1
+value = 1.0
+
+[node name="Sprints" type="Control" parent="Sliders"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextEdit" type="TextEdit" parent="Sliders/Sprints"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -26.206
+anchor_top = -19.171
+anchor_right = -26.206
+anchor_bottom = -19.171
+offset_left = 1442.24
+offset_top = 1213.84
+offset_right = 1647.24
+offset_bottom = 1256.84
+text = "Sprint"
+
+[node name="CheckBox" type="CheckBox" parent="Sliders/Sprints"]
+layout_mode = 0
+offset_left = 630.0
+offset_top = 460.0
+offset_right = 654.0
+offset_bottom = 484.0
+
+[connection signal="button_down" from="RunButton" to="RunButton" method="_on_button_down"]
+[connection signal="value_changed" from="Sliders/Distance/HSlider" to="Sliders/Distance" method="_on_h_slider_value_changed"]
+[connection signal="value_changed" from="Sliders/Elevation/HSlider" to="Sliders/Elevation" method="_on_h_slider_value_changed"]
+[connection signal="value_changed" from="Sliders/GroundDifficulty/HSlider" to="Sliders/GroundDifficulty" method="_on_h_slider_value_changed"]
