@@ -45,8 +45,7 @@ public class Race : IRun
         return _run.CalculateDifficultyScore();
     }
 
-    public double Distance()
-    {
-        return _run.Distance();
-    }
+    public double Distance() => _run.Distance();
+    public double Elevation() => _run.Elevation();
+    public double GroundDifficulty() => _run.GroundDifficulty();
 }

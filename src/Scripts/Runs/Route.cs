@@ -2,7 +2,7 @@
 
 namespace Manager.Scripts.Runs;
 
-public class Route() : IRun
+public partial class Route : Godot.GodotObject, IRun
 {
     private List<Segment> Segments { get; set; }
 
@@ -14,9 +14,14 @@ public class Route() : IRun
     public Route(double distance, double elevation, double groundDifficulty = 1) : this()
     {
         Segment segment = new Segment(distance, elevation, groundDifficulty);
+        Segments = new List<Segment>();
         Segments.Add(segment);
     }
-    
+
+    public Route()
+    {
+    }
+
     public double CalculateDifficultyScore()
     {
         double difficultyScore = 0;
@@ -35,5 +40,25 @@ public class Route() : IRun
             distance += segment.Distance;
         }
         return distance;
+    }
+
+    public double Elevation()
+    {
+        double elevation = 0;
+        foreach (Segment segment in Segments)
+        {
+            elevation += segment.Elevation;
+        }
+        return elevation;
+    }
+    
+    public double GroundDifficulty()
+    {
+        double groundDifficulty = 0;
+        foreach (Segment segment in Segments)
+        {
+            groundDifficulty += segment.GroundDifficulty;
+        }
+        return groundDifficulty / Segments.Count;
     }
 }

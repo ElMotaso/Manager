@@ -1,9 +1,11 @@
-﻿using Manager.Scripts.Math;
+﻿using System;
+using Godot;
+using Manager.Scripts.Math;
 using Manager.Scripts.Runs;
 
 namespace Manager.Scripts;
 
-public partial class Runner // Ideen und bisschen ausgebaute Teile der Klasse in RunnerDeprecated
+public partial class Runner : Node // Ideen und bisschen ausgebaute Teile der Klasse in RunnerDeprecated
 {
 
     private string _name;
@@ -11,7 +13,7 @@ public partial class Runner // Ideen und bisschen ausgebaute Teile der Klasse in
     private int _money;
     private double _fitness;
 
-    public string Name
+    public new string Name
     {
         get => _name;
         set => _name = value;
@@ -35,13 +37,18 @@ public partial class Runner // Ideen und bisschen ausgebaute Teile der Klasse in
     
 
 
-    public Runner(string name)
+    public Runner()
     {
-        _name = name;
+        _name = "Thomas";
         NormalDistribution normalDistribution = new NormalDistribution();
         _fitness = normalDistribution.GetNormal(100, 100);
         _fatigue = 0;
         _money = (int)normalDistribution.GetNormal(5000, 3000);
+    }
+    
+    public Runner(string name) : this()
+    {
+        _name = name;
     }
     
     public Runner(string name, double fitness, double fatigue, int money)
@@ -51,7 +58,7 @@ public partial class Runner // Ideen und bisschen ausgebaute Teile der Klasse in
         _fatigue = fatigue;
         _money = money;
     }
-
+    
     private double GetAveragePace() // in minutes per km
     {
         return 7 / _fitness;
@@ -75,8 +82,9 @@ public partial class Runner // Ideen und bisschen ausgebaute Teile der Klasse in
         _fatigue = CalculateFatigue(run);
     }
     
-    public double Run(IRun run)
+    public double Run(IRun run, bool isSprint = false)
     {
+        Console.WriteLine("yup i " + (isSprint ? "sprinted" : "jogged") + " " + run.Distance() + " km and " + run.Elevation() + " m with a difficulty of " + run.GroundDifficulty() + "!");
         UpdateRunnerStats(run);
         return GetFinishTime(run);
     }
