@@ -8,11 +8,11 @@
 [node name="Main" type="Node"]
 script = ExtResource("1_h6v6y")
 _playerPath = NodePath("Player")
+_runPath = NodePath("Run")
 _racePath = NodePath("RaceButton")
-_daysTillRace = 14
+_daysTillRace = 2
 _raceDistance = 10
 _raceElevation = 170
-_raceGroundDifficulty = 2
 
 [node name="Player" parent="." instance=ExtResource("1_7j17x")]
 offset_left = 11.0

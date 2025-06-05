@@ -2,20 +2,23 @@
 
 namespace Manager.Scripts.Runs;
 
-public class Race : IRun
+public partial class Race : Route
 {
     private readonly double _entryFee;
     private readonly Runner[] _runners;
-    private readonly IRun _run;
 
-    public Race(double entryFee, Runner[] runners, IRun run)
+    public Race(double entryFee, Runner[] runners, double distance, double elevation, double groundDifficulty = 1)
+    : base(distance, elevation, groundDifficulty)
+{
+    _entryFee = entryFee;
+    _runners = runners;
+}
+
+    public Race()
     {
-        _entryFee = entryFee;
-        _runners = runners;
-        _run = run;
     }
-    
-    private string Start()
+
+    public string Start()
     {
         double bestTime = float.MaxValue;
         string winner = "";
@@ -23,7 +26,7 @@ public class Race : IRun
         foreach (Runner runner in _runners)
         {
             runner.Money -= (int)(_entryFee);
-            double finishTime = runner.Run(_run);
+            double finishTime = runner.Run(this);
             GD.Print($"{runner.Name}: {finishTime}");
             if (finishTime < bestTime)
             {
@@ -39,13 +42,4 @@ public class Race : IRun
         string winner = Start();
         GD.Print($"Race winner: {winner}");
     }
-    
-    public double CalculateDifficultyScore()
-    {
-        return _run.CalculateDifficultyScore();
-    }
-
-    public double Distance() => _run.Distance();
-    public double Elevation() => _run.Elevation();
-    public double GroundDifficulty() => _run.GroundDifficulty();
 }

@@ -16,4 +16,10 @@ public partial class Run : Control
     {
         _main.GetPlayerToRun(route, isSprint);
     }
+
+    public void DisableRunButton()
+    {
+        Button runButton = GetNode<Button>("RunButton");
+        runButton.Disabled = true;
+    }
 }

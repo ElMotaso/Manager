@@ -20,6 +20,10 @@ public class Segment : IRun
 
     public double CalculateDifficultyScore()
     {
+        if (_distance == 0)
+        {
+            return 0;
+        }
         double G = _elevation / _distance;
         double factor = 0;
         if (G > 0)

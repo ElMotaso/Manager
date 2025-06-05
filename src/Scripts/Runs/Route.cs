@@ -4,9 +4,9 @@ namespace Manager.Scripts.Runs;
 
 public partial class Route : Godot.GodotObject, IRun
 {
-    private List<Segment> Segments { get; set; }
+    protected List<Segment> Segments { get; set; }
 
-    public Route(List<Segment> segments) : this()
+    protected Route(List<Segment> segments) : this()
     {
         Segments = segments;
     }

@@ -39,7 +39,7 @@ public partial class Runner : Node // Ideen und bisschen ausgebaute Teile der Kl
 
     public Runner()
     {
-        _name = "Player";
+        _name = "Thomas";
         NormalDistribution normalDistribution = new NormalDistribution();
         _fitness = normalDistribution.GetNormal(100, 5);
         _fatigue = 0;
@@ -61,7 +61,7 @@ public partial class Runner : Node // Ideen und bisschen ausgebaute Teile der Kl
     
     private double GetAveragePace() // in minutes per km
     {
-        return 7 / _fitness;
+        return 7 / (_fitness/100);
     }
     
     
@@ -96,9 +96,38 @@ public partial class Runner : Node // Ideen und bisschen ausgebaute Teile der Kl
     
     public double Run(IRun run, bool isSprint = false)
     {
+        if (run.Distance() == 0)
+        {
+            Console.WriteLine("Restday");
+            UpdateRunnerStats(run);
+            return 0;
+        }
         Console.WriteLine(_name + " " + (isSprint ? "sprinted" : "jogged") + " " + run.Distance() + " km and " + run.Elevation() + " m with a difficulty of " + run.GroundDifficulty() + "!");
+        Console.WriteLine("In " + GetFinishTime(run) + " minutes.");
         UpdateRunnerStats(run);
         return GetFinishTime(run);
+    }
+
+    public void Recover()
+    {
+        if (_fatigue > 100)
+        {
+            _fatigue -= 1;
+        }
+        else if (_fatigue > 75)
+        {
+            _fatigue *= 0.99;
+        }
+        else if (_fatigue > 50)
+        {
+            _fatigue *= 0.95;
+        }
+        else
+        {
+            _fatigue *= 0.9;
+        }
+
+        UpdateUi();
     }
 
 }
