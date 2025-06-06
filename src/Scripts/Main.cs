@@ -54,4 +54,9 @@ public partial class Main : Node
     {
         return _player;
     }
+
+    private void _on_race_button_return_race_results(string raceResults)
+    {
+        GetNode<TextEdit>("RaceResults").Text = raceResults;
+    }
 }

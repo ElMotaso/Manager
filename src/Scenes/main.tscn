@@ -36,4 +36,11 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Run" parent="." instance=ExtResource("2_2u7ne")]
 
+[node name="RaceResults" type="TextEdit" parent="."]
+offset_left = 358.0
+offset_top = 292.0
+offset_right = 667.0
+offset_bottom = 482.0
+
+[connection signal="ReturnRaceResults" from="RaceButton" to="." method="_on_race_button_return_race_results"]
 [connection signal="button_down" from="RaceButton" to="RaceButton" method="_on_button_down"]

@@ -9,10 +9,10 @@ public partial class Race : Route
 
     public Race(double entryFee, Runner[] runners, double distance, double elevation, double groundDifficulty = 1)
     : base(distance, elevation, groundDifficulty)
-{
+    {
     _entryFee = entryFee;
     _runners = runners;
-}
+    }
 
     public Race()
     {
@@ -21,25 +21,21 @@ public partial class Race : Route
     public string Start()
     {
         double bestTime = float.MaxValue;
-        string winner = "";
+        Runner winner = null;
+        string raceResults = "";
         
         foreach (Runner runner in _runners)
         {
             runner.Money -= (int)(_entryFee);
             double finishTime = runner.Run(this);
-            GD.Print($"{runner.Name}: {finishTime}");
+            raceResults += $"{runner.Name}: {finishTime}\n";
             if (finishTime < bestTime)
             {
                 bestTime = finishTime;
-                winner = runner.Name;
+                winner = runner;
             }
         }
-        return winner;
-    }
-    
-    public void PrintRaceResults()
-    {
-        string winner = Start();
-        GD.Print($"Race winner: {winner}");
+        raceResults += (winner == null) ? "No winners in war" : $"Winner: {winner.Name}";
+        return raceResults;
     }
 }

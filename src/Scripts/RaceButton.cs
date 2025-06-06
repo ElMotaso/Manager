@@ -6,13 +6,15 @@ namespace Manager.Scripts;
 public partial class RaceButton : Button
 {
     
+    [Signal] delegate void ReturnRaceResultsEventHandler(string raceResults);
+    
     private void _on_button_down()
     {
-        GD.Print("The Race begins!");
+        string raceResults = "The Race begins!\n";
         Race race = new Race(10, 
             GetRunners(), 10, 180, 1.7);
-        race.Start();
-        race.PrintRaceResults();
+        raceResults += race.Start();
+        EmitSignalReturnRaceResults(raceResults);
     }
 
     private Runner[] GetRunners()
