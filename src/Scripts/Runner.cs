@@ -65,7 +65,7 @@ public partial class Runner : Node // Ideen und bisschen ausgebaute Teile der Kl
     }
     
     
-    private double GetFinishTime(IRun run)
+    public double GetFinishTime(IRun run)
     {
         return run.Distance() *
                GetAveragePace();
@@ -94,18 +94,20 @@ public partial class Runner : Node // Ideen und bisschen ausgebaute Teile der Kl
         UpdateUi();
     }
     
-    public double Run(IRun run, bool isSprint = false)
+    public string Run(IRun run, bool isSprint = false)
     {
+        string runStats = "";
         if (run.Distance() == 0)
         {
             Console.WriteLine("Restday");
             UpdateRunnerStats(run);
-            return 0;
+            return runStats;
         }
-        Console.WriteLine(_name + " " + (isSprint ? "sprinted" : "jogged") + " " + run.Distance() + " km and " + run.Elevation() + " m with a difficulty of " + run.GroundDifficulty() + "!");
-        Console.WriteLine("In " + GetFinishTime(run) + " minutes.");
+        runStats += _name + " " + (isSprint ? "sprinted" : "jogged") + " " + run.Distance() + " km and an Elevation of "
+                    + run.Elevation() + " m with a difficulty of " + run.GroundDifficulty() + "! ";
+        runStats += "And that in " + GetFinishTime(run) + " minutes.";
         UpdateRunnerStats(run);
-        return GetFinishTime(run);
+        return runStats;
     }
 
     public void Recover()

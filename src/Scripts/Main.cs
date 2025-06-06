@@ -30,7 +30,7 @@ public partial class Main : Node
     public void GetPlayerToRun(Route route, bool isSprint)
     {
         StartNextDay();
-        _player.Run(route, isSprint);
+        GetNode<TextEdit>("RaceResults").Text = _player.Run(route, isSprint);
     }
     
     private void StartNextDay()

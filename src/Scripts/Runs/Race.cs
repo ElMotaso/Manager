@@ -27,7 +27,8 @@ public partial class Race : Route
         foreach (Runner runner in _runners)
         {
             runner.Money -= (int)(_entryFee);
-            double finishTime = runner.Run(this);
+            runner.Run(this);
+            double finishTime = runner.GetFinishTime(this);
             raceResults += $"{runner.Name}: {finishTime}\n";
             if (finishTime < bestTime)
             {

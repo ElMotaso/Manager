@@ -41,6 +41,7 @@ offset_left = 358.0
 offset_top = 292.0
 offset_right = 667.0
 offset_bottom = 482.0
+wrap_mode = 1
 
 [connection signal="ReturnRaceResults" from="RaceButton" to="." method="_on_race_button_return_race_results"]
 [connection signal="button_down" from="RaceButton" to="RaceButton" method="_on_button_down"]
