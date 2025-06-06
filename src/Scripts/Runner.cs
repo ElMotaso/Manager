@@ -1,95 +1,135 @@
 ﻿using System;
-using DefaultNamespace.MathLib;
+using Godot;
+using Manager.Scripts.Math;
+using Manager.Scripts.Runs;
 
 namespace Manager.Scripts;
 
-public class Runner
+public partial class Runner : Node // Ideen und bisschen ausgebaute Teile der Klasse in RunnerDeprecated
 {
-    public string Name { get; set; }
 
-    private double _fitness;
+    private string _name;
     private double _fatigue;
-    private double _fatigueResistance;
-    private double _hillSkill;
-    private double _injuryProbability;
-    private double _fatigueInterest = 1.05;
+    private int _money;
+    private double _fitness;
 
-    public int Money { get; set; }
-
-    public Runner(string name)
+    public new string Name
     {
-        this.Name = name;
+        get => _name;
+        set => _name = value;
+    }
+    public double Fitness
+    {
+        get => _fitness;
+        set => _fitness = value;
+    }
+    public int Money
+    {
+        get => _money;
+        set => _money = value;
+    }
+    public double Fatigue
+    {
+        get => _fatigue;
+        set => _fatigue = value;
+    }
+
+    
+
+
+    public Runner()
+    {
+        _name = "Thomas";
         NormalDistribution normalDistribution = new NormalDistribution();
-        _fitness = normalDistribution.GetNormal(100, 100);
+        _fitness = normalDistribution.GetNormal(100, 5);
         _fatigue = 0;
-        _fatigueResistance = 1;
-        _hillSkill = 0;
-        _injuryProbability = 0.5;
-        Money = (int)normalDistribution.GetNormal(5000, 3000);
+        _money = (int)normalDistribution.GetNormal(5000, 3000);
     }
     
-    public Runner(string name, double fitness, double fatigue, double fatigueResistance, double hillSkill,
-        double injuryProbability, int money)
+    public Runner(string name) : this()
     {
-        this.Name = name;
-        this._fitness = fitness;
-        this._fatigue = fatigue;
-        this._fatigueResistance = fatigueResistance;
-        this._hillSkill = hillSkill;
-        this._injuryProbability = injuryProbability;
-        this.Money = money;
+        _name = name;
     }
-
+    
+    public Runner(string name, double fitness, double fatigue, int money)
+    {
+        _name = name;
+        _fitness = fitness;
+        _fatigue = fatigue;
+        _money = money;
+    }
+    
     private double GetAveragePace() // in minutes per km
     {
-        return 7 / _fitness;
-    }
-
-    private double GetDistancePenaltyFactor(Run run)
-    {
-        return Math.Pow(1.1 - _fatigueResistance / 10, run.DistanceDifficultyScore);
-    }
-
-    private double GetElevationPenaltyFactor(Run run)
-    {
-        return Math.Pow(1.1 - _hillSkill / 10, run.HillDifficultyScore / 100);
-    }
-
-    private double GetRoutePenaltyFactor(Run run)
-    {
-        return GetDistancePenaltyFactor(run) * GetElevationPenaltyFactor(run);
-    }
-
-    private double GetRunnerReadienessFactor()
-    {
-        return 1 / _fatigue;
-    }
-
-    private double GetFinishTime(Run run)
-    {
-        return run.Distance *
-               GetAveragePace() *
-               GetRoutePenaltyFactor(run) *
-               GetRunnerReadienessFactor();
-    }
-
-    private double CalculateFatigue(Run run)
-    {
-        double addedFatigue = _fatigue * _fatigueInterest
-                              + run.DistanceDifficultyScore 
-                              + run.HillDifficultyScore / 10 / _hillSkill;
-        return _fatigue + addedFatigue * _fatigueResistance;
-    }
-
-    private bool GetsInjured(Run run)
-    {
-        return false;
+        return 7 / (_fitness/100);
     }
     
-    public double Run(Run run)
+    
+    public double GetFinishTime(IRun run)
+    {
+        return run.Distance() *
+               GetAveragePace();
+    }
+
+    private double CalculateFatigue(IRun run)
+    {
+        double addedFatigue = run.CalculateDifficultyScore() / _fitness;
+        return _fatigue + addedFatigue;
+    }
+
+    private double CalculateNewFitness(IRun run)
+    {
+        return _fitness + run.CalculateDifficultyScore() / _fitness;
+    }
+
+    protected virtual void UpdateUi()
+    {
+        
+    }
+
+    private void UpdateRunnerStats(IRun run)
     {
         _fatigue = CalculateFatigue(run);
-        return GetFinishTime(run);
+        _fitness = CalculateNewFitness(run);
+        UpdateUi();
+    }
+    
+    public string Run(IRun run, bool isSprint = false)
+    {
+        string runStats = "";
+        if (run.Distance() == 0)
+        {
+            Console.WriteLine("Restday");
+            UpdateRunnerStats(run);
+            return runStats;
+        }
+        runStats += _name + " " + (isSprint ? "sprinted" : "jogged") + " " + run.Distance() + " km and an Elevation of "
+                    + run.Elevation() + " m with a difficulty of " + run.GroundDifficulty() + "! ";
+        runStats += "And that in " + GetFinishTime(run) + " minutes.";
+        UpdateRunnerStats(run);
+        return runStats;
+    }
+
+    public void Recover()
+    {
+        if (_fatigue > 100)
+        {
+            _fatigue -= 1;
+        }
+        else if (_fatigue > 75)
+        {
+            _fatigue *= 0.99;
+        }
+        else if (_fatigue > 50)
+        {
+            _fatigue *= 0.95;
+        }
+        else
+        {
+            _fatigue *= 0.9;
+        }
+
+        UpdateUi();
     }
 
 }

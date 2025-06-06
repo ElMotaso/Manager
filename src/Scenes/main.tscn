@@ -1,10 +1,26 @@
-[gd_scene load_steps=2 format=3 uid="uid://dsiqck7hbclq3"]
+[gd_scene load_steps=5 format=3 uid="uid://dsiqck7hbclq3"]
 
-[ext_resource type="Script" uid="uid://fv3abgkoclw1" path="res://src/Scripts/Button.cs" id="1_ygj5l"]
+[ext_resource type="PackedScene" uid="uid://dayq2fveermu2" path="res://src/Scenes/player.tscn" id="1_7j17x"]
+[ext_resource type="Script" uid="uid://5sle2jepojor" path="res://src/Scripts/Main.cs" id="1_h6v6y"]
+[ext_resource type="Script" uid="uid://fv3abgkoclw1" path="res://src/Scripts/RaceButton.cs" id="1_ygj5l"]
+[ext_resource type="PackedScene" uid="uid://dcvx0hvifvc31" path="res://src/Scenes/run.tscn" id="2_2u7ne"]
 
 [node name="Main" type="Node"]
+script = ExtResource("1_h6v6y")
+_playerPath = NodePath("Player")
+_runPath = NodePath("Run")
+_racePath = NodePath("RaceButton")
+_daysTillRace = 2
+_raceDistance = 10
+_raceElevation = 170
 
-[node name="Button" type="Button" parent="."]
+[node name="Player" parent="." instance=ExtResource("1_7j17x")]
+offset_left = 11.0
+offset_top = 269.0
+offset_right = 11.0
+offset_bottom = 269.0
+
+[node name="RaceButton" type="Button" parent="."]
 anchors_preset = -1
 anchor_right = 0.297743
 anchor_bottom = 0.354938
@@ -12,7 +28,20 @@ offset_left = 10.0
 offset_top = 10.0
 offset_right = 18.0
 offset_bottom = 18.0
+text = "Race
+
+INFO"
 script = ExtResource("1_ygj5l")
 metadata/_edit_use_anchors_ = true
 
-[connection signal="button_down" from="Button" to="Button" method="_on_button_down"]
+[node name="Run" parent="." instance=ExtResource("2_2u7ne")]
+
+[node name="RaceResults" type="TextEdit" parent="."]
+offset_left = 358.0
+offset_top = 292.0
+offset_right = 667.0
+offset_bottom = 482.0
+wrap_mode = 1
+
+[connection signal="ReturnRaceResults" from="RaceButton" to="." method="_on_race_button_return_race_results"]
+[connection signal="button_down" from="RaceButton" to="RaceButton" method="_on_button_down"]

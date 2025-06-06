@@ -1,29 +1,25 @@
-﻿namespace Manager.Scripts;
+using Godot;
+using Manager.Scripts.Runs;
 
-public class Run
+namespace Manager.Scripts;
+
+public partial class Run : Control
 {
-    public double Distance { get; set; }
-    public double Elevation { get; set; }
-    private double _groundDifficulty { get; set; }
-    public double DistanceDifficultyScore { get; set; }
-    public double HillDifficultyScore { get; set; }
+    private Main _main;
     
-    public Run(double distance, double elevation, double groundDifficulty = 1)
+    public override void _Ready()
     {
-        this.Distance = distance;
-        this.Elevation = elevation;
-        this._groundDifficulty = groundDifficulty;
-        this.DistanceDifficultyScore = CalculateDistanceDifficultyScore(distance, groundDifficulty);
-        this.HillDifficultyScore = CalculateHillDifficultyScore(elevation, groundDifficulty);
+        _main = GetParent<Main>();
     }
 
-    private double CalculateDistanceDifficultyScore(double distance, double groundDifficulty)
+    private void _on_run_button_start_run(Route route, bool isSprint)
     {
-        return distance * groundDifficulty;
+        _main.GetPlayerToRun(route, isSprint);
     }
 
-    private double CalculateHillDifficultyScore(double elevation, double groundDifficulty)
+    public void DisableRunButton()
     {
-        return elevation * groundDifficulty;   
+        Button runButton = GetNode<Button>("RunButton");
+        runButton.Disabled = true;
     }
 }
