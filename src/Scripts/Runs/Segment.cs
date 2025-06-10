@@ -1,4 +1,6 @@
-﻿namespace Manager.Scripts.Runs;
+﻿using Manager.Scripts.Math;
+
+namespace Manager.Scripts.Runs;
 
 public class Segment : IRun
 {
@@ -16,6 +18,14 @@ public class Segment : IRun
         _distance = distance;
         _elevation = elevation;
         _groundDifficulty = groundDifficulty;
+    }
+
+    public Segment()
+    {
+        NormalDistribution normalDistribution = new NormalDistribution();
+        _distance = normalDistribution.GetNormal(2, 0.2);
+        _elevation = normalDistribution.GetNormal(_distance * 10, _distance * 2);
+        _groundDifficulty = normalDistribution.GetNormal(1.3, 0.15);
     }
 
     public double CalculateDifficultyScore()

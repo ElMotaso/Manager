@@ -16,4 +16,10 @@ public class NormalDistribution
         // Scale and translate to match the desired mean and variance
         return mean + stdNormal * System.Math.Sqrt(variance);
     }
+
+    public int GetNormalInt(double mean, double variance)
+    {
+        return (int) System.Math.Round(
+            GetNormal(mean, variance));
+    }
 }

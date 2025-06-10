@@ -11,8 +11,7 @@ public partial class RaceButton : Button
     private void _on_button_down()
     {
         string raceResults = "The Race begins!\n";
-        Race race = new Race(10, 
-            GetRunners(), 10, 180, 1.7);
+        Race race = GetParent<Main>().GetRace();
         raceResults += race.Start();
         EmitSignalReturnRaceResults(raceResults);
     }

@@ -6,12 +6,12 @@ public partial class Route : Godot.GodotObject, IRun
 {
     protected List<Segment> Segments { get; set; }
 
-    protected Route(List<Segment> segments) : this()
+    protected Route(List<Segment> segments)
     {
         Segments = segments;
     }
     
-    public Route(double distance, double elevation, double groundDifficulty = 1) : this()
+    public Route(double distance, double elevation, double groundDifficulty = 1)
     {
         Segment segment = new Segment(distance, elevation, groundDifficulty);
         Segments = new List<Segment>();
@@ -20,6 +20,12 @@ public partial class Route : Godot.GodotObject, IRun
 
     public Route()
     {
+        Segments = new List<Segment>();
+        for (int i = 0; i < 10; i++)
+        {
+            Segment segment = new Segment();
+            Segments.Add(segment);
+        }
     }
 
     public double CalculateDifficultyScore()
